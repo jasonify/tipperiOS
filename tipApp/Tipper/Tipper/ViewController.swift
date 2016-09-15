@@ -26,19 +26,15 @@ class ViewController: UIViewController {
         
         
         
-        let number = 21010.00
-        let currencyString = currencyStringFromNumber(number)
-
-        print("Currency String is: \(currencyString.stringFromNumber(number)!)")
+        let currencyFormatter = currencyStringFromNumber()
 
         
-        let sign  = "\(currencyString.currencySymbol)"
+        let sign  = "\(currencyFormatter.currencySymbol)"
         dollarLabel.text = sign
-        print(sign)
         
         
-        tipLabel.text = currencyString.stringFromNumber(0.00)
-        totalLabel.text = currencyString.stringFromNumber(0.00)
+        tipLabel.text = currencyFormatter.stringFromNumber(0.00)
+        totalLabel.text = currencyFormatter.stringFromNumber(0.00)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.18, green:0.99, blue:0.69, alpha:1.0)
 
@@ -59,6 +55,7 @@ class ViewController: UIViewController {
             
         }
         
+        billField.keyboardType = UIKeyboardType.NumbersAndPunctuation;
         
         billField.becomeFirstResponder()
 
@@ -107,7 +104,7 @@ class ViewController: UIViewController {
     }
     
     // Borrowed from stackoverflow:
-    func currencyStringFromNumber(number: Double) -> NSNumberFormatter {
+    func currencyStringFromNumber() -> NSNumberFormatter {
         let formatter = NSNumberFormatter()
         formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
         formatter.currencyCode = NSLocale.currentLocale().displayNameForKey(NSLocaleCurrencySymbol, value: NSLocaleCurrencyCode)
@@ -122,8 +119,11 @@ class ViewController: UIViewController {
         let bill = Double(billField.text!) ?? 0
         
         let tip = bill * tipPercentages[tipSelector.selectedSegmentIndex]
-        tipLabel.text =  String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", tip + bill)
+
+        let currencyFormatter = currencyStringFromNumber()
+        tipLabel.text =  currencyFormatter.stringFromNumber(tip)
+        
+        totalLabel.text = currencyFormatter.stringFromNumber(tip+bill)
     }
 
     override func didReceiveMemoryWarning() {
@@ -139,9 +139,9 @@ class ViewController: UIViewController {
  
  Remember the bill amount across app restarts. After an extended period of time, clear the state. This is a UI trick that Apple uses with the Spotlight app. If you return there a minute later, it will show your most recent search. if you return 10 minutes later, it defaults to blank. To implement this, plug into the application lifecycle and track time using NSDate.
  
- [ ] set keyboard to number / textfield?
+ [x] set keyboard to number / textfield?
  
- [ ] Use locale specific currency and currency thousands separator.
+ [x] Use locale specific currency and currency thousands separator.
  [ ] Add a light/dark color theme to the settings view. In viewWillAppear, update views with the correct theme colors.
  [x] Make sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
  [x] Add animations to your UI
