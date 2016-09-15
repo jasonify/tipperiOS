@@ -24,6 +24,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        let number = 21010.00
+        let currencyString = currencyStringFromNumber(number)
+
+        print("Currency String is: \(currencyString.stringFromNumber(number)!)")
+
+        dollarLabel.text = currencyString.currencySymbol
+        
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.18, green:0.99, blue:0.69, alpha:1.0)
 
         
@@ -43,6 +53,9 @@ class ViewController: UIViewController {
             
         }
         
+        dollarLabel.text = NSLocale.currentLocale().displayNameForKey(NSLocaleCurrencySymbol, value: NSLocaleCurrencyCode)
+
+       
         billField.becomeFirstResponder()
 
     }
@@ -88,6 +101,16 @@ class ViewController: UIViewController {
         print("hello")
         view.endEditing(true)
     }
+    
+    // Borrowed from stackoverflow:
+    func currencyStringFromNumber(number: Double) -> NSNumberFormatter {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        formatter.currencyCode = NSLocale.currentLocale().displayNameForKey(NSLocaleCurrencySymbol, value: NSLocaleCurrencyCode)
+        return formatter
+    }
+    
+    
     @IBAction func calculateTip(sender: AnyObject) {
         
         let tipPercentages = [0.18, 0.20, 0.25]
@@ -111,8 +134,8 @@ class ViewController: UIViewController {
 /*
  
  Remember the bill amount across app restarts. After an extended period of time, clear the state. This is a UI trick that Apple uses with the Spotlight app. If you return there a minute later, it will show your most recent search. if you return 10 minutes later, it defaults to blank. To implement this, plug into the application lifecycle and track time using NSDate.
- Use locale specific currency and currency thousands separator.
- Add a light/dark color theme to the settings view. In viewWillAppear, update views with the correct theme colors.
+ [ ] Use locale specific currency and currency thousands separator.
+ [ ] Add a light/dark color theme to the settings view. In viewWillAppear, update views with the correct theme colors.
  [x] Make sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
  [x] Add animations to your UI
  

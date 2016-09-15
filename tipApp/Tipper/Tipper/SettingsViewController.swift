@@ -43,9 +43,9 @@ class SettingsViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         UIView.animateWithDuration(0.2, animations: {
-            self.tipLabel.alpha = 0.4
+            self.tipLabel.alpha = 1
         })
-        UIView.animateWithDuration(0.6, animations: {
+        UIView.animateWithDuration(0.4, animations: {
             // This causes first view to fade in and second view to fade out
             self.tipPercentSettings.alpha = 1
         })
