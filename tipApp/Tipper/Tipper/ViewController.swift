@@ -31,8 +31,14 @@ class ViewController: UIViewController {
 
         print("Currency String is: \(currencyString.stringFromNumber(number)!)")
 
-        dollarLabel.text = currencyString.currencySymbol
         
+        let sign  = "\(currencyString.currencySymbol)"
+        dollarLabel.text = sign
+        print(sign)
+        
+        
+        tipLabel.text = currencyString.stringFromNumber(0.00)
+        totalLabel.text = currencyString.stringFromNumber(0.00)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.18, green:0.99, blue:0.69, alpha:1.0)
 
@@ -53,9 +59,7 @@ class ViewController: UIViewController {
             
         }
         
-        dollarLabel.text = NSLocale.currentLocale().displayNameForKey(NSLocaleCurrencySymbol, value: NSLocaleCurrencyCode)
-
-       
+        
         billField.becomeFirstResponder()
 
     }
@@ -134,6 +138,9 @@ class ViewController: UIViewController {
 /*
  
  Remember the bill amount across app restarts. After an extended period of time, clear the state. This is a UI trick that Apple uses with the Spotlight app. If you return there a minute later, it will show your most recent search. if you return 10 minutes later, it defaults to blank. To implement this, plug into the application lifecycle and track time using NSDate.
+ 
+ [ ] set keyboard to number / textfield?
+ 
  [ ] Use locale specific currency and currency thousands separator.
  [ ] Add a light/dark color theme to the settings view. In viewWillAppear, update views with the correct theme colors.
  [x] Make sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
